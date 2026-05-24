@@ -506,3 +506,86 @@ body {
   cursor: pointer;
   accent-color: var(--primary);
 }
+/* ==========================================================================
+   8. ASYNCHRONOUS WEATHER DASHBOARD STYLES
+   ========================================================================== */
+.weather-container {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  max-width: 650px;
+}
+
+.weather-search-group {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.weather-search-group .form-control {
+  flex: 1;
+}
+
+.weather-alert {
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: 1px solid var(--border);
+  background-color: var(--bg-base);
+  color: var(--text-muted);
+}
+
+.weather-alert.error {
+  background-color: rgba(255, 107, 107, 0.1);
+  border-color: var(--error);
+  color: var(--error);
+}
+
+.weather-alert.info {
+  background-color: rgba(140, 133, 255, 0.05);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.weather-display-card {
+  background-color: var(--bg-surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  margin-top: 1.25rem;
+}
+
+/* Localized Flexbox Metrics System */
+.weather-metrics-grid {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.metric-box {
+  flex: 1;
+  min-width: 120px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border);
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  text-align: center;
+}
+
+.metric-label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.25rem;
+}
+
+.metric-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-main);
+}

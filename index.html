@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home | Nitish Shrivastava</title>
-  <meta name="description" content="Portfolio of Nitish Shrivastava, Aspiring Frontend Developer from Buddha Institute of Technology. Focused on accessible, semantic HTML5 design.">
-  <meta name="keywords" content="Nitish Shrivastava, Frontend Developer, Buddha Institute of Technology, AKTU, Web Developer Portfolio">
+  <meta name="description" content="Portfolio of Nitish Shrivastava, Aspiring Frontend Developer. Featuring a real-time REST API Weather Dashboard.">
+  <meta name="keywords" content="Nitish Shrivastava, Frontend Developer, Weather Dashboard, REST API, Async JavaScript">
   <meta name="robots" content="index, follow">
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -26,18 +26,50 @@
   </header>
 
   <main class="main-layout" id="main-content">
-    <section class="hero-section" aria-labelledby="hero-heading">
+    
+    <section class="hero-section" aria-labelledby="hero-heading" style="padding-bottom: 2rem;">
       <h1 id="hero-heading" class="hero-title">
         Hi, I am <span class="hero-accent">Nitish Shrivastava</span>
       </h1>
       <p class="hero-lead">
-        An aspiring Software Engineer studying at Buddha Institute of Technology, GIDA Gorakhpur (affiliated with AKTU). I build high-contrast, accessible, and standards-compliant web interfaces.
+        Computer Science student at Buddha Institute of Technology, Gorakhpur. Specializing in semantic design and asynchronous web applications.
       </p>
-      <div class="btn-group">
-        <a href="projects.html" class="btn btn-primary">See My Work</a>
-        <a href="contact.html" class="btn btn-secondary">Get In Touch</a>
+    </section>
+
+    <section class="weather-dashboard-section" aria-labelledby="weather-heading" style="margin-bottom: 3rem;">
+      <h2 id="weather-heading" class="section-title" style="font-size: 1.75rem;">Async REST API Sandbox</h2>
+      <p style="color: var(--text-muted); margin-bottom: 1.5rem;">This component fetches live, dynamic global weather conditions natively using the Fetch API with full network exception handling.</p>
+      
+      <div class="weather-container">
+        <div class="weather-search-group">
+          <input type="text" id="weather-city-input" class="form-control" placeholder="Enter global city name (e.g., Gorakhpur, London)..." aria-label="Search weather by city name">
+          <button id="weather-search-btn" class="btn btn-primary">Fetch Metrics</button>
+        </div>
+
+        <div id="weather-status" class="weather-alert" aria-live="polite">Enter a city to retrieve real-time telemetry.</div>
+
+        <div id="weather-display" class="weather-display-card" style="display: none;">
+          <h3 id="display-city-name" style="font-size: 1.5rem; margin-bottom: 0.5rem;">City Name</h3>
+          <p id="display-condition" style="color: var(--accent); font-weight: 600; text-transform: capitalize; margin-bottom: 1.5rem;">Condition</p>
+          
+          <div class="weather-metrics-grid">
+            <div class="metric-box">
+              <span class="metric-label">Temperature</span>
+              <span id="metric-temp" class="metric-value">--°C</span>
+            </div>
+            <div class="metric-box">
+              <span class="metric-label">Humidity</span>
+              <span id="metric-humidity" class="metric-value">--%</span>
+            </div>
+            <div class="metric-box">
+              <span class="metric-label">Wind Velocity</span>
+              <span id="metric-wind" class="metric-value">-- m/s</span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
+
   </main>
 
   <footer class="site-footer" role="contentinfo">
@@ -46,5 +78,6 @@
     </div>
   </footer>
 
+  <script src="script.js"></script>
 </body>
 </html>
