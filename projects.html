@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Projects | Nitish Shrivastava</title>
-  <meta name="description" content="Explore web applications and design work created by Nitish Shrivastava.">
+  <meta name="description" content="Explore web applications and interactive JavaScript software built by Nitish Shrivastava.">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -24,14 +24,37 @@
   </header>
 
   <main class="main-layout" id="main-content">
-    <section aria-labelledby="projects-heading">
-      <h1 id="projects-heading" class="section-title">Academic & Personal Projects</h1>
+    
+    <section class="todo-app-section" aria-labelledby="todo-heading" style="margin-bottom: 4rem;">
+      <h1 id="todo-heading" class="section-title">JavaScript State Sandbox</h1>
+      <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Below is a fully functional CRUD application demonstrating LocalStorage persistence and dynamic DOM reconciliation.</p>
       
+      <div id="todo-status-live" class="sr-only" aria-live="polite"></div>
+
+      <div class="todo-container">
+        <div class="todo-input-group">
+          <input type="text" id="todo-input" class="form-control" placeholder="Create a new functional task..." aria-label="New task description">
+          <button id="add-task-btn" class="btn btn-primary">Add Task</button>
+        </div>
+
+        <div class="todo-filters">
+          <button class="btn btn-secondary filter-btn" data-filter="all" aria-current="page">All</button>
+          <button class="btn btn-secondary filter-btn" data-filter="active">Active</button>
+          <button class="btn btn-secondary filter-btn" data-filter="completed">Completed</button>
+        </div>
+
+        <ul id="task-list" class="todo-list">
+          </ul>
+      </div>
+    </section>
+
+    <section aria-labelledby="projects-heading">
+      <h2 id="projects-heading" class="section-title" style="font-size: 1.75rem;">Static Showcases</h2>
       <div class="projects-grid">
         <article class="project-card" aria-labelledby="p1-title">
           <img src="assets/project-mock.svg" class="project-image" alt="Wireframe blueprint of an accessible layout structure">
           <div class="project-body">
-            <h2 id="p1-title">Semantic Portfolio Structure</h2>
+            <h3 id="p1-title">Semantic Portfolio Structure</h3>
             <p class="project-desc">A highly structured, accessible portfolio layout built using pure HTML5 and custom CSS layouts to hit perfect Lighthouse scores.</p>
           </div>
         </article>
@@ -39,7 +62,7 @@
         <article class="project-card" aria-labelledby="p2-title">
           <img src="assets/project-mock.svg" class="project-image" alt="Data wireframe rendering clean content hierarchies">
           <div class="project-body">
-            <h2 id="p2-title">Responsive Grid Interface</h2>
+            <h3 id="p2-title">Responsive Grid Interface</h3>
             <p class="project-desc">A CSS Grid layout system designed to be fully fluid across mobile screens and ultrawide desktop monitors.</p>
           </div>
         </article>
@@ -53,5 +76,6 @@
     </div>
   </footer>
 
+  <script src="script.js"></script>
 </body>
 </html>
