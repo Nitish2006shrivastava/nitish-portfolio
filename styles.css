@@ -1,33 +1,46 @@
+/* ==========================================================================
+   1. DESIGN SYSTEM & ACCESSIBLE VARIABLES (Dark/Light Architecture)
+   ========================================================================== */
 :root {
-  --bg-primary: #0f0f0f;
-  --bg-surface: #1a1a1a;
-  --bg-surface-hover: #242424;
-  --text-primary: #f0f0f0;
-  --text-muted: #aaaaaa;
-  --accent: #8c85ff; 
-  --accent-focus: #b5b0ff;
-  --border-color: #333333;
-  --error: #ff6b6b;
-  --success: #51cf66;
-  --font-main: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  --max-width: 1100px;
-  --radius: 6px;
-  --transition: 0.25s ease;
+  /* Dark Mode Palette (Default) - Contrast Ratio > 4.5:1 guaranteed */
+  --bg-base: #0a0a0c;
+  --bg-surface: #121216;
+  --bg-surface-raised: #1c1c24;
+  
+  --text-main: #f3f4f6;
+  --text-muted: #9ca3af;
+  
+  --primary: #8c85ff;         /* Optimized for WCAG contrast on dark bg */
+  --primary-glow: rgba(140, 133, 255, 0.15);
+  --accent: #22d3ee;          /* Cyan accent for premium dev look */
+  --border: #262626;
+  
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Automatic Light Mode Transition based on User Device Settings */
 @media (prefers-color-scheme: light) {
   :root {
-    --bg-primary: #fafafa;
+    --bg-base: #f8fafc;
     --bg-surface: #ffffff;
-    --bg-surface-hover: #f0f0f0;
-    --text-primary: #121212;
-    --text-muted: #555555;
-    --accent: #5c4eff;
-    --accent-focus: #3b2eff;
-    --border-color: #dddddd;
+    --bg-surface-raised: #f1f5f9;
+    
+    --text-main: #0f172a;
+    --text-muted: #475569;
+    
+    --primary: #4f46e5;       /* High contrast indigo for light mode */
+    --primary-glow: rgba(79, 70, 229, 0.1);
+    --accent: #0ea5e9;
+    --border: #e2e8f0;
   }
 }
 
+/* ==========================================================================
+   2. CORE ARCHITECTURE & ACCESSIBILITY RESETS
+   ========================================================================== */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -35,11 +48,12 @@
 }
 
 html {
-  font-family: var(--font-main);
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+  font-family: var(--font-sans);
+  background-color: var(--bg-base);
+  color: var(--text-main);
   scroll-behavior: smooth;
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
 body {
@@ -48,54 +62,64 @@ body {
   flex-direction: column;
 }
 
+/* Skip Link: Keyboard Accessibility */
 .skip-link {
   position: absolute;
   top: -100px;
   left: 1rem;
-  background: var(--accent);
-  color: #0f0f0f;
+  background: var(--primary);
+  color: #000;
   padding: 0.75rem 1.5rem;
   font-weight: 700;
   z-index: 999;
-  border-radius: 0 0 var(--radius) var(--radius);
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
   text-decoration: none;
-  transition: top var(--transition);
+  transition: top 0.2s var(--transition-smooth);
 }
 
 .skip-link:focus-visible {
   top: 0;
-  outline: 3px solid var(--text-primary);
+  outline: 3px solid var(--text-main);
 }
 
+/* Focus Indicator Ring for All Interactive Elements */
 *:focus-visible {
-  outline: 3px solid var(--accent-focus);
-  outline-offset: 3px;
+  outline: 3px solid var(--primary);
+  outline-offset: 4px;
 }
 
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
+/* Prefers Reduced Motion Safeguard */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
+/* ==========================================================================
+   3. FLEXBOX NAVIGATION & HEADER ARCHITECTURE
+   ========================================================================== */
 .site-header {
-  border-bottom: 1px solid var(--border-color);
-  background-color: var(--bg-primary);
+  background-color: rgba(10, 10, 12, 0.8);
+  backdrop-filter: blur(12px); /* Modern Glassmorphism blur effect */
+  border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
   z-index: 100;
 }
 
+@media (prefers-color-scheme: light) {
+  .site-header { background-color: rgba(248, 240, 252, 0.8); }
+}
+
 .nav-container {
-  max-width: var(--max-width);
+  max-width: 1100px;
   margin: 0 auto;
   padding: 1.25rem 1.5rem;
+  /* Localized Flexbox alignment */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -104,186 +128,234 @@ body {
 .site-logo {
   font-size: 1.25rem;
   font-weight: 800;
-  color: var(--text-primary);
+  color: var(--text-main);
   text-decoration: none;
+  letter-spacing: -0.5px;
 }
 
 .nav-list {
   display: flex;
   list-style: none;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
 .nav-link {
   color: var(--text-muted);
   text-decoration: none;
   font-weight: 500;
+  font-size: 0.95rem;
+  padding: 0.5rem 0.25rem;
+  position: relative;
+  transition: color 0.2s var(--transition-smooth);
+}
+
+.nav-link:hover {
+  color: var(--text-main);
 }
 
 .nav-link[aria-current="page"] {
-  color: var(--accent);
-  border-bottom: 2px solid var(--accent);
+  color: var(--primary);
+  font-weight: 600;
 }
 
+/* ==========================================================================
+   4. LAYOUT CONTAINERS & RESPONSIVE GRID DESIGN
+   ========================================================================== */
 .main-layout {
   flex: 1;
-  max-width: var(--max-width);
+  max-width: 1100px;
   width: 100%;
   margin: 0 auto;
-  padding: 3rem 1.5rem;
+  padding: 2.5rem 1.5rem;
 }
 
-.site-footer {
-  margin-top: auto;
-  border-top: 1px solid var(--border-color);
-  background-color: var(--bg-surface);
-  padding: 2rem 1.5rem;
+/* Mobile-First Layout Grid (Defaults to 1 column for mobile) */
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
 }
 
-.footer-content {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
+/* Responsive Tablet/Desktop View Expansion via Media Query */
+@media (min-width: 768px) {
+  .content-grid {
+    grid-template-columns: 2fr 1fr; /* 2 Columns Layout for Tablet/PC */
+  }
 }
 
-.footer-links {
-  display: flex;
-  gap: 1.5rem;
-  list-style: none;
-}
-
-.footer-link {
-  color: var(--text-muted);
-  text-decoration: none;
-}
-
+/* ==========================================================================
+   5. COMPONENT DESIGNS (Hero, Buttons, Cards, Forms)
+   ========================================================================== */
+/* Hero Section */
 .hero-section {
-  padding: 4rem 0;
-  max-width: 800px;
+  padding: 3.5rem 0;
+  max-width: 750px;
 }
 
 .hero-title {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  line-height: 1.1;
+  font-size: clamp(2.25rem, 6vw, 3.75rem); /* Fluid typography */
+  line-height: 1.15;
+  font-weight: 800;
+  letter-spacing: -1px;
   margin-bottom: 1.5rem;
 }
 
 .hero-accent {
-  color: var(--accent);
+  color: var(--primary);
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .hero-lead {
-  font-size: 1.2rem;
+  font-size: clamp(1.1rem, 2vw, 1.25rem);
   color: var(--text-muted);
   margin-bottom: 2.5rem;
 }
 
+/* Flexbox Interactive Button Group */
 .btn-group {
   display: flex;
   gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .btn {
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--radius);
+  display: inline-flex;
+  align-items: center;
+  padding: 0.8rem 1.75rem;
+  border-radius: var(--radius-md);
   font-weight: 600;
   text-decoration: none;
-  cursor: pointer;
+  font-size: 0.95rem;
+  transition: all 0.25s var(--transition-smooth);
 }
 
 .btn-primary {
-  background-color: var(--accent);
-  color: #0f0f0f;
-  border: none;
+  background-color: var(--primary);
+  color: #050505;
+  border: 1px solid transparent;
+  box-shadow: 0 4px 14px var(--primary-glow);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px var(--primary-glow);
+  opacity: 0.95;
 }
 
 .btn-secondary {
   background-color: transparent;
-  color: var(--text-primary);
-  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  border: 1px solid var(--border);
 }
 
-.content-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 3rem;
+.btn-secondary:hover {
+  background-color: var(--bg-surface-raised);
+  border-color: var(--text-muted);
 }
 
-@media (min-width: 768px) {
-  .content-grid {
-    grid-template-columns: 2fr 1fr;
-  }
-}
-
-.section-title {
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
-}
-
-.text-block p {
-  margin-bottom: 1.25rem;
-  color: var(--text-muted);
-}
-
-.skills-aside {
-  background-color: var(--bg-surface);
-  padding: 1.5rem;
-  border-radius: var(--radius);
-  border: 1px solid var(--border-color);
-  height: fit-content;
-}
-
-.skills-list {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 1rem;
-}
-
-.skill-tag {
-  background-color: var(--bg-primary);
-  border: 1px solid var(--border-color);
-  padding: 0.35rem 0.75rem;
-  font-size: 0.85rem;
-  border-radius: 4px;
-}
-
+/* Advanced 2D Grid Showcase Configuration */
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); /* Fluid grids */
   gap: 2rem;
   margin-top: 2rem;
 }
 
+/* Card Component with Glassmorphic Elements */
 .project-card {
   background-color: var(--bg-surface);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s var(--transition-smooth), border-color 0.25s var(--transition-smooth);
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary);
+  box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.5);
 }
 
 .project-image {
   width: 100%;
-  height: 180px;
+  height: 190px;
   object-fit: cover;
+  border-bottom: 1px solid var(--border);
 }
 
 .project-body {
   padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
+.project-body h2 {
+  font-size: 1.3rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.3px;
+}
+
+.project-desc {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+  flex: 1;
+}
+
+/* Sidebar / Skills Aside Styling */
+.skills-aside {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border);
+  padding: 1.75rem;
+  border-radius: var(--radius-lg);
+  height: fit-content;
+}
+
+.skills-aside h2 {
+  font-size: 1.25rem;
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.3px;
+}
+
+/* Local Flexbox wrapping tags layout */
+.skills-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.skill-tag {
+  background-color: var(--bg-surface-raised);
+  border: 1px solid var(--border);
+  padding: 0.4rem 0.85rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-main);
+  border-radius: var(--radius-md);
+}
+
+/* Semantic Form Elements */
 .form-container {
-  max-width: 600px;
+  max-width: 650px;
+}
+
+.section-title {
+  font-size: 2.25rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 0.5rem;
 }
 
 .contact-form {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.25rem;
   margin-top: 2rem;
 }
 
@@ -293,15 +365,47 @@ body {
   gap: 0.5rem;
 }
 
-.form-control {
-  background-color: var(--bg-surface);
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
-  padding: 0.75rem 1rem;
-  border-radius: var(--radius);
-  width: 100%;
+.form-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-main);
 }
 
-textarea.form-control {
-  min-height: 150px;
+.form-control {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border);
+  color: var(--text-main);
+  padding: 0.8rem 1rem;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  border-radius: var(--radius-md);
+  width: 100%;
+  transition: border-color 0.2s var(--transition-smooth);
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+/* ==========================================================================
+   6. SITE FOOTER LANDMARK ARCHITECTURE
+   ========================================================================== */
+.site-footer {
+  margin-top: auto;
+  border-top: 1px solid var(--border);
+  background-color: var(--bg-surface);
+  padding: 2rem 1.5rem;
+}
+
+.footer-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
 }
