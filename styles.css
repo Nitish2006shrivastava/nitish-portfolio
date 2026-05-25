@@ -589,3 +589,80 @@ body {
   font-weight: 700;
   color: var(--text-main);
 }
+/* ==========================================================================
+   9. CAPSTONE E-COMMERCE CORE APP GRID STYLES
+   ========================================================================== */
+.store-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+@media (min-width: 992px) {
+  .store-grid {
+    grid-template-columns: 2.5fr 1fr; /* Distinct scaling structures on wider views */
+  }
+}
+
+.catalog-products {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.cart-sticky-panel {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  position: sticky;
+  top: 100px;
+  height: fit-content;
+}
+
+.cart-badge {
+  background-color: var(--primary-glow);
+  color: var(--primary);
+  border: 1px solid rgba(140, 133, 255, 0.3);
+  font-size: 0.8rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+}
+
+.cart-list-container {
+  list-style: none;
+  max-height: 260px;
+  overflow-y: auto;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1rem;
+}
+
+.cart-item-node {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed var(--border);
+}
+
+.cart-item-node:last-child {
+  border-bottom: none;
+}
+
+.cart-remove-btn {
+  background: transparent;
+  border: none;
+  color: var(--error);
+  font-size: 1.25rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.cart-summary-box {
+  background-color: var(--bg-surface-raised);
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+}
